@@ -11,8 +11,8 @@ PACKAGE=$1; shift;
 echo "start to build docker image"
 docker build -t tmp_img .
 
-echo "start to download python packages and then put them into a tar file"
-docker run --rm -v tmp_vol:/__packages__ -v $(pwd):/__tmp__ tmp_img bash -c "pip install --cache-dir /__packages__ ${PACKAGE} ; tar cvf /__tmp__/py_archive.tar /__packages__"
+echo "start to download python packages and then put them into a tar.gz file"
+docker run --rm -v tmp_vol:/__packages__ -v $(pwd):/__tmp__ tmp_img bash -c "pip download --cache-dir /__packages__ ${PACKAGE} ; tar czvf /__tmp__/py_archive.tar.gz /__packages__"
 
 echo "deleting temp docker volume"
 docker volume rm tmp_vol
