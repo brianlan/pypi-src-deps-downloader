@@ -24,6 +24,7 @@ if [ $? -eq 0 ]
     echo "tar zxvf ./${ARCHIVE_NAME}.tar.gz" > $(pwd)/install.sh
     echo "pip install ./${ARCHIVE_NAME}/*" >> $(pwd)/install.sh
     chmod +x $(pwd)/install.sh
+    zip -r -m ${PACKAGE}.zip install.sh ${ARCHIVE_NAME}.tar.gz
   else
     echo "=== Error found during building docker image. Process aborted and wait for cleaning. ==="
 fi
