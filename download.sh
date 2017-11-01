@@ -18,11 +18,11 @@ if [ $? -eq 0 ]
   then
     echo "=== start to download python packages and then put them into a tar.gz file ==="
     docker run --rm -v tmp_vol:/${ARCHIVE_NAME} -v $(pwd):/__tmp__ tmp_img \
-      bash -c "pip download ${PACKAGE} --cache-dir /${ARCHIVE_NAME}; tar czvf /__tmp__/${ARCHIVE_NAME}.tar.gz /${ARCHIVE_NAME}"
+      bash -c "pip download ${PACKAGE} --dest /${ARCHIVE_NAME}; tar czvf /__tmp__/${ARCHIVE_NAME}.tar.gz /${ARCHIVE_NAME}"
 
     echo "=== generate install.sh ==="
     echo "tar zxvf ./${ARCHIVE_NAME}.tar.gz" > $(pwd)/install.sh
-    echo "pip install ${PACKAGE} --cache-dir ./${ARCHIVE_NAME}" >> $(pwd)/install.sh
+    echo "pip install ./${ARCHIVE_NAME}/*" >> $(pwd)/install.sh
     chmod +x $(pwd)/install.sh
   else
     echo "=== Error found during building docker image. Process aborted and wait for cleaning. ==="
